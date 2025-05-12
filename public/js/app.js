@@ -1,21 +1,4 @@
 
-// ### First Project JavaScript:
-
-// ## 1 - Instructions:
-// - Create a folder named: first_project_js_firstName_lastName
-// - Create a repository with the same name as the folder
-// - Adhere to the folder structure
-// - Individual work
-// - Minimum of 10 commits
-// - Deadline: One day
-// - Use of object classes, arrays, functions, prompts, etc.
-
-// ## 2 - Project Objective:
-// - Create a JavaScript program that simulates logging into a bank account using only the console to interact with the user.
-
-// ## 3 - Instructions:
-// - Account Creation and Management:
-//     + Allow the user, via prompts, to choose between signing up, logging in, or changing the password.
 const dataBaseUser = []
 let SpecialCharacter_name = /[!@#$%^&*()\-+={}[\]:;"'<>,.?\/|\\]/
 let SpecialCharacter_email = /@/
@@ -121,7 +104,101 @@ askUsername = true
                 }
 
                 // logging in*****************************************************
+                
+            else if (askUsername == "logging in") {
+            let loginEmail = prompt("Enter your email:").trim().toLowerCase();
+            let loginPassword = prompt("Enter your password:").trim();
 
+            
+                // اhadi bach n9albo 3la l user
+            for (let i = 0; i < dataBaseUser.length; i++) {
+              if (dataBaseUser[i].Email === loginEmail && dataBaseUser[i].Password === loginPassword) {
+            alert("Login successful! Welcome, " + dataBaseUser[i].Name);
+            
+            let currentUser = dataBaseUser[i];
+
+            // hna l user ba9i ma3ndo 7at chi ruyal
+                if (currentUser.Balance= undefined) {
+                currentUser.Balance = 0
+                currentUser.History = [];
+                currentUser.Loan = 0;
+                currentUser.Investment = 0;
+                }
+            
+
+            while (true) {
+                let operation = prompt("Choose an operation: withdraw, deposit, loan, invest, history, logout");
+
+                if (operation == "logout") {
+                    alert("Logged out successfully.");
+                    break;
+                }
+
+                // Withdraw
+                else if (operation == "withdraw") {
+                    let amount = Number(prompt("Enter amount to withdraw:"));
+                    if (amount <= currentUser.Balance) {
+                        currentUser.Balance -= amount;
+                        currentUser.History.push("Withdraw: "+ amount);
+                        alert("Withdrawal successful. New balance: "+ currentUser.Balance);
+                    } else {
+                        alert("Insufficient ");
+                    }
+                }
+
+                // Deposit
+                else if (operation == "deposit") {
+                    let amount = Number(prompt("Enter amount to deposit (max 1000DH):"));
+                    if (amount <= 1000) {
+                        currentUser.Balance += amount;
+                        currentUser.History.push("Deposit: " + amount);
+                        alert("Deposit successful. New balance: " + currentUser.Balance);
+                    } else {
+                        alert("Cannot deposit more than 1000.");
+                    }
+                }
+
+                // Loan
+                else if (operation == "loan") {
+                    let loanAmount = currentUser.Balance * 0.2;
+                    currentUser.Balance += loanAmount;
+                    currentUser.Loan += loanAmount;
+                    currentUser.History.push("Loan taken: "+ loanAmount);
+                    alert("Loan of "+ loanAmount +" added. New balance: "+ currentUser.Balance);
+                }
+
+                // Invest
+                else if (operation == "invest") {
+                    let investAmount = Number(prompt("How much would you like to invest?"));
+                    if (investAmount <= currentUser.Balance) {
+                        currentUser.Balance -= investAmount;
+                        currentUser.Investment += investAmount;
+                        currentUser.History.push("Invested: " + investAmount);
+                        alert("Investment successful.");
+                    } else {
+                        alert("You don't have enough funds.");
+                    }
+                }
+
+                // History
+                else if (operation == "history") {
+                    alert("Transaction History: \n " + currentUser.History.join("\n"));
+                }
+
+                // Unknown
+                else {
+                    alert("Unknown operation. Please try again.");
+                }
+            }
+
+            
+        }else{
+        alert("Invalid email or password.");
+    }
+    }
+
+     
+}
                 }
         
 
