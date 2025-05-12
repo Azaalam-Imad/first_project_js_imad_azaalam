@@ -16,19 +16,23 @@
 // ## 3 - Instructions:
 // - Account Creation and Management:
 //     + Allow the user, via prompts, to choose between signing up, logging in, or changing the password.
-let user = {}
-let dataBaseUser = []
+const dataBaseUser = []
 let SpecialCharacter_name = /[!@#$%^&*()\-+={}[\]:;"'<>,.?\/|\\]/
 let SpecialCharacter_email = /@/
+let ForPasword =  /(?=.*[@#*_+/])/
 console.log(dataBaseUser);
 
 
 askUsername = true
         while(askUsername){
+            
             let askUsername = prompt("choose: signing up , logging in or changing the password")
+            if (askUsername == "exit"){
+                break
+            }
                 // signing up********************
             if (askUsername == "signing up") {
-
+                var user = {}
 
                 // name****************************************
                 let nameUser = prompt("enter your name :").trim()
@@ -51,33 +55,43 @@ askUsername = true
                 }
                 // email *********************************************
                 let emailUser = prompt("enter your email:").trim()
+                
                while(true){
-                emailUser = emailUser.toLowerCase() 
-                if (emailUser.length <= 10 ) {
-                    emailUser = prompt("email rah 9siir ").trim()
+                emailUser = emailUser.toLowerCase()
+                let check = dataBaseUser.findIndex(e => emailUser === e.Email) 
+                if (emailUser.length <= 10) {
+                    emailUser = prompt("Email is too short:").trim().toLowerCase();
                 } else if (/\s/.test(emailUser)) {
-                     emailUser = prompt("enter your email bla space").trim()
-                }else if (emailUser.split('@').length > 2) {
-                   emailUser = prompt("enter your email mafihch  '@' ktar mn mara ").trim()
-               }else if (SpecialCharacter_email.test(emailUser)==false) {
-                 emailUser = prompt("nsiti @").trim()
-                 }else if (emailUser.length >= 10 && SpecialCharacter_email.test(emailUser)) {
-                    user.Email= emailUser
-                    break
-                }            
-}
-               
+                    emailUser = prompt("Email must not contain spaces:").trim().toLowerCase();
+                } else if (emailUser.split("@").length > 2  ) {
+                    emailUser = prompt("Email must contain exactly one '@':").trim().toLowerCase();
+                } else if (!SpecialCharacter_email.test(emailUser)) {
+                    emailUser = prompt("Email format is invalid (missing '@' ):").trim().toLowerCase();
+                } else if (check !== -1 && dataBaseUser.length >= 1) {
+                    emailUser = prompt("Email is already used:").trim().toLowerCase();
+                } else {
+                    user.Email = emailUser;
+                    break;
+                }
+                          
+                }
+                
+              
                // Age *********************************************
 
-                let AgeUser= Number(prompt("enter your Age:"))
+                let AgeUser= prompt("enter your Age:")
                 
                 while(true){
-                    if (AgeUser>1 || AgeUser<100) {
+                     if(AgeUser != Number(AgeUser)){
+                        AgeUser= prompt("DAKHAL RA9M")
+                    }else if ( /\s/.test(AgeUser)) {
+                        AgeUser= prompt("enter your Age bla spaces:")
+                    }
+                    else if (AgeUser>1 && AgeUser<100) {
                         user.Age= AgeUser
                         break
-                    }else{
-                        AgeUser= Number(prompt("enter your Age:"))
                     }
+                    
                 }
 
 
@@ -85,25 +99,35 @@ askUsername = true
 
 
 
-
                 let PasswordUser= prompt("enter your Password:")
-                let ConPasswordUser= prompt("confirmed Password:")
-                if (PasswordUser==ConPasswordUser) {
+                
+                
+               while(true){
+                 let ConPasswordUser= prompt("confirmed Password:")
+                 if (PasswordUser.length <=7) {
+                    PasswordUser= prompt("Require at least 7 characters:")
+                 }else if (ForPasword.test(PasswordUser) == false){
+                    PasswordUser= prompt("Require at least one special character from" + ForPasword)
+                 }else if (PasswordUser==ConPasswordUser) {
                     user.Password= PasswordUser
+                    alert("mar7ba bk m3ana")
+                    break
                 }else{
                     alert("Password incorrect" )   
                 }
+               }
                 
                 dataBaseUser.push(user)
-                break
-            }else if (askUsername == "logging in") {
-                
-            }else
-            if(askUsername == "changing the password") {
+                }
 
-            }
+                // logging in*****************************************************
+
                 }
         
+
+                
+ 
+
 
 
 
