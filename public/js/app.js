@@ -16,6 +16,34 @@
 // ## 3 - Instructions:
 // - Account Creation and Management:
 //     + Allow the user, via prompts, to choose between signing up, logging in, or changing the password.
+let user = {}
+let dataBaseUser = []
+
+
+askUsername = true
+        while(askUsername){
+            let askUsername = prompt("choose: signing up , logging in or changing the password")
+            if (askUsername == "signing up") {
+                let nameUser = prompt("enter your name :")
+                user.Name= nameUser
+                let emailUser = prompt("enter your email:")
+                user.Email= emailUser
+                let AgeUser= prompt("enter your Age:")
+                user.Age= AgeUser
+                dataBaseUser.push(user)
+                break
+            }else
+            if (askUsername == "logging in") {
+                
+            }else
+            if(askUsername == "changing the password") {
+
+            }
+
+        }
+
+
+
 //     + If the user only writes "exit," they exit the current process, and the choice question is asked again.
 //         * If the user chooses to sign up, here are the details they must enter:
 //             # Name (Full):
@@ -79,3 +107,6 @@
 //             # History:
 //             - Ability to view the entire transaction history.
 // fjs.txt
+
+
+
