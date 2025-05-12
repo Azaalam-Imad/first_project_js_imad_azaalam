@@ -18,7 +18,8 @@
 //     + Allow the user, via prompts, to choose between signing up, logging in, or changing the password.
 let user = {}
 let dataBaseUser = []
-let SpecialCharacter = /[!@#$%^&*()\-+={}[\]:;"'<>,.?\/|\\]/
+let SpecialCharacter_name = /[!@#$%^&*()\-+={}[\]:;"'<>,.?\/|\\]/
+let SpecialCharacter_email = /@/
 console.log(dataBaseUser);
 
 
@@ -31,30 +32,60 @@ askUsername = true
 
                 // name****************************************
                 let nameUser = prompt("enter your name :").trim()
-               
+            
                 while(true){
                      
-                    if (nameUser.length>=5 && SpecialCharacter.test(nameUser)==false) {
+                    if (nameUser.length>=5 && SpecialCharacter_name.test(nameUser)==false && nameUser.charAt(0)==nameUser.charAt(0).toUpperCase() ) {
                     user.Name= nameUser.charAt(0).toUpperCase() + nameUser.slice(1).toLowerCase()
                     
                     break
-                }else if(SpecialCharacter.test(nameUser)){
+                }else if(SpecialCharacter_name.test(nameUser)){
                    
-                    nameUser = prompt("enter your name bla" + SpecialCharacter).trim()
+                    nameUser = prompt("enter your name bla" + SpecialCharacter_name).trim()
                     
-                } else{
+                }else if(nameUser.charAt(0)  != nameUser.charAt(0).toUpperCase()){
+                    nameUser = prompt("the first letter should remain capitalized" ).trim()
+                 } else{
                      nameUser = prompt("smiya raha 9siira :")
-                } }
-                
+                }
+                }
                 // email *********************************************
-
-                let emailUser = prompt("enter your email:")
+                let emailUser = prompt("enter your email:").trim()
+               while(true){
                 emailUser = emailUser.toLowerCase() 
-                user.Email= emailUser
+                if (emailUser.length <= 10 ) {
+                    emailUser = prompt("email rah 9siir ").trim()
+                } else if (/\s/.test(emailUser)) {
+                     emailUser = prompt("enter your email bla space").trim()
+                }else if (emailUser.split('@').length > 2) {
+                   emailUser = prompt("enter your email mafihch  '@' ktar mn mara ").trim()
+               }else if (SpecialCharacter_email.test(emailUser)==false) {
+                 emailUser = prompt("nsiti @").trim()
+                 }else if (emailUser.length >= 10 && SpecialCharacter_email.test(emailUser)) {
+                    user.Email= emailUser
+                    break
+                }            
+}
+               
                // Age *********************************************
 
-                let AgeUser= prompt("enter your Age:")
-                user.Age= AgeUser
+                let AgeUser= Number(prompt("enter your Age:"))
+                
+                while(true){
+                    if (AgeUser>1 || AgeUser<100) {
+                        user.Age= AgeUser
+                        break
+                    }else{
+                        AgeUser= Number(prompt("enter your Age:"))
+                    }
+                }
+
+
+                // Password *********************************************
+
+
+
+
                 let PasswordUser= prompt("enter your Password:")
                 let ConPasswordUser= prompt("confirmed Password:")
                 if (PasswordUser==ConPasswordUser) {
@@ -65,15 +96,14 @@ askUsername = true
                 
                 dataBaseUser.push(user)
                 break
-            }else
-            if (askUsername == "logging in") {
+            }else if (askUsername == "logging in") {
                 
             }else
             if(askUsername == "changing the password") {
 
             }
-
-        }
+                }
+        
 
 
 
@@ -140,6 +170,4 @@ askUsername = true
 //             # History:
 //             - Ability to view the entire transaction history.
 // fjs.txt
-
-
 
