@@ -18,18 +18,51 @@
 //     + Allow the user, via prompts, to choose between signing up, logging in, or changing the password.
 let user = {}
 let dataBaseUser = []
+let SpecialCharacter = /[!@#$%^&*()\-+={}[\]:;"'<>,.?\/|\\]/
+console.log(dataBaseUser);
 
 
 askUsername = true
         while(askUsername){
             let askUsername = prompt("choose: signing up , logging in or changing the password")
+                // signing up********************
             if (askUsername == "signing up") {
-                let nameUser = prompt("enter your name :")
-                user.Name= nameUser
+
+
+                // name****************************************
+                let nameUser = prompt("enter your name :").trim()
+               
+                while(true){
+                     
+                    if (nameUser.length>=5 && SpecialCharacter.test(nameUser)==false) {
+                    user.Name= nameUser.charAt(0).toUpperCase() + nameUser.slice(1).toLowerCase()
+                    
+                    break
+                }else if(SpecialCharacter.test(nameUser)){
+                   
+                    nameUser = prompt("enter your name bla" + SpecialCharacter).trim()
+                    
+                } else{
+                     nameUser = prompt("smiya raha 9siira :")
+                } }
+                
+                // email *********************************************
+
                 let emailUser = prompt("enter your email:")
+                emailUser = emailUser.toLowerCase() 
                 user.Email= emailUser
+               // Age *********************************************
+
                 let AgeUser= prompt("enter your Age:")
                 user.Age= AgeUser
+                let PasswordUser= prompt("enter your Password:")
+                let ConPasswordUser= prompt("confirmed Password:")
+                if (PasswordUser==ConPasswordUser) {
+                    user.Password= PasswordUser
+                }else{
+                    alert("Password incorrect" )   
+                }
+                
                 dataBaseUser.push(user)
                 break
             }else
