@@ -199,7 +199,29 @@ askUsername = true
 
      
 }
+           // changing the password*****************************************************
+           else if (askUsername == "changing the password") {
+
+            let loginEmail = prompt("Enter your email:").trim().toLowerCase();
+           
+
+            for (let i = 0; i < dataBaseUser.length; i++) {
+              if (dataBaseUser[i].Email === loginEmail ) {
+                let newPassword = prompt("enter new password")
+                if (dataBaseUser[i].Password == newPassword) {
+                    newPassword = prompt("enter new password")
+                }else{
+                    dataBaseUser[i].Password = newPassword 
                 }
+            }else{
+                alert("had email makaynch")
+            }
+        }
+
+           }
+              
+              
+}
         
 
                 
