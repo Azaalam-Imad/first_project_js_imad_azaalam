@@ -6,10 +6,10 @@ let ForPasword =  /(?=.*[@#*_+/])/
 console.log(dataBaseUser);
 
 
-askUsername = true
+let askUsername = true
         while(askUsername){
             
-            let askUsername = prompt("choose: signing up , logging in or changing the password")
+             askUsername = prompt("choose: signing up , logging in or changing the password")
             if (askUsername == "exit"){
                 break
             }
@@ -106,37 +106,38 @@ askUsername = true
                 // logging in*****************************************************
                 
             else if (askUsername == "logging in") {
-            let loginEmail = prompt("Enter your email:").trim().toLowerCase();
-            let loginPassword = prompt("Enter your password:").trim();
+            let loginEmail = prompt("Enter your email:").trim().toLowerCase()
+            let loginPassword = prompt("Enter your password:").trim()
 
             
-                // اhadi bach n9albo 3la l user
+                // اhadi bach n9albo 3la l user*************************************
             for (let i = 0; i < dataBaseUser.length; i++) {
               if (dataBaseUser[i].Email === loginEmail && dataBaseUser[i].Password === loginPassword) {
-            alert("Login successful! Welcome, " + dataBaseUser[i].Name);
+            alert("Login successful! Welcome, " + dataBaseUser[i].Name)
             
             let currentUser = dataBaseUser[i];
 
-            // hna l user ba9i ma3ndo 7at chi ruyal
-                if (currentUser.Balance= undefined) {
+            // hna l user ba9i ma3ndo 7at chi ruyal*************************************
+            
+                if (currentUser.Balance === undefined) {
                 currentUser.Balance = 0
-                currentUser.History = [];
-                currentUser.Loan = 0;
-                currentUser.Investment = 0;
+                currentUser.History = []
+                currentUser.Loan = 0
+                currentUser.Investment = 0
                 }
             
 
             while (true) {
-                let operation = prompt("Choose an operation: withdraw, deposit, loan, invest, history, logout");
-
+                let operation = prompt("Choose an operation: withdraw, deposit, loan, invest, history, logout")
+                // logout**************************************
                 if (operation == "logout") {
-                    alert("Logged out successfully.");
+                    alert("Logged out successfully.")
                     break;
                 }
 
-                // Withdraw
+                // Withdraw**************************************
                 else if (operation == "withdraw") {
-                    let amount = Number(prompt("Enter amount to withdraw:"));
+                    let amount = Number(prompt("Enter amount to withdraw:"))
                     if (amount <= currentUser.Balance) {
                         currentUser.Balance -= amount;
                         currentUser.History.push("Withdraw: "+ amount);
@@ -146,7 +147,7 @@ askUsername = true
                     }
                 }
 
-                // Deposit
+                // Deposit************************************
                 else if (operation == "deposit") {
                     let amount = Number(prompt("Enter amount to deposit (max 1000DH):"));
                     if (amount <= 1000) {
@@ -158,7 +159,7 @@ askUsername = true
                     }
                 }
 
-                // Loan
+                // Loan********************************************
                 else if (operation == "loan") {
                     let loanAmount = currentUser.Balance * 0.2;
                     currentUser.Balance += loanAmount;
@@ -167,7 +168,7 @@ askUsername = true
                     alert("Loan of "+ loanAmount +" added. New balance: "+ currentUser.Balance);
                 }
 
-                // Invest
+                // Invest*********************************************
                 else if (operation == "invest") {
                     let investAmount = Number(prompt("How much would you like to invest?"));
                     if (investAmount <= currentUser.Balance) {
@@ -180,12 +181,12 @@ askUsername = true
                     }
                 }
 
-                // History
+                // History*************************************************************
                 else if (operation == "history") {
                     alert("Transaction History: \n " + currentUser.History.join("\n"));
                 }
 
-                // Unknown
+                
                 else {
                     alert("Unknown operation. Please try again.");
                 }
@@ -210,8 +211,19 @@ askUsername = true
                 let newPassword = prompt("enter new password")
                 if (dataBaseUser[i].Password == newPassword) {
                     newPassword = prompt("enter new password")
-                }else{
-                    dataBaseUser[i].Password = newPassword 
+                     while (true) {
+                    if (newPassword === dataBaseUser[i].Password) {
+                        newPassword = prompt("New password must be different. Try again:")
+                    } else if (newPassword.length <= 7) {
+                        newPassword = prompt("Password must be at least 8 characters:")
+                    } else if (ForPasword.test(newPassword) === false) {
+                        newPassword = prompt("Password must contain at least one special character (e.g. @ # * _ + /):")
+                    } else {
+                        dataBaseUser[i].Password = newPassword
+                        alert("Password updated successfully!")
+                        break;
+                    }
+                    }
                 }
             }else{
                 alert("had email makaynch")
@@ -228,69 +240,4 @@ askUsername = true
  
 
 
-
-
-//     + If the user only writes "exit," they exit the current process, and the choice question is asked again.
-//         * If the user chooses to sign up, here are the details they must enter:
-//             # Name (Full):
-//             - Check for leading or trailing spaces.
-//             - The first letter should be capitalized.
-//             - After each space, the first letter should remain capitalized.
-//             - Check that all other characters are in lowercase.
-//             - Do not save the Name if it has less than 5 characters (excluding spaces).
-//             - Do not save the Name if it contains numbers, "@", or similar special characters.
-
-//             # Email:
-//             - Check for leading or trailing spaces.
-//             - Convert all letters to lowercase.
-//             - Do not save the Email if it has spaces in the middle.
-//             - Do not save the Email if it has fewer than 10 characters (excluding spaces).
-//             - Do not save the Email if it does not contain exactly one "@" symbol.
-//             - Ensure the email is unique.
-
-//             # Age:
-//             - Check for leading, trailing, or middle spaces.
-//             - Verify that only digits are entered.
-//             - Do not save the Age if it has 0 characters, or if it has 3 characters or more.
-
-//             # Password:
-//             - Check for leading or trailing spaces.
-//             - Do not save the Password if it has spaces in the middle.
-//             - Require at least one special character from the set: ["@", "#", "-", "+", "*", "/"].
-//             - Require at least 7 characters to confirm the password.
-
-//             # Password_confirmed:
-//             - The user must re-enter their exact password; otherwise, they are blocked.
-
-//         * If the user chooses to log in, here are the details they must enter:
-//             # Email:
-//             - Check if the email exists in our Database.
-            
-//             # Password:
-//             - Check if the entered password is associated with the previously entered email.
-
-//         * If the user chooses to change the password:
-//             - They must enter their existing Email in the Database.
-
-//         * After the user logs in, display the amount they have in their bank (user's choice) and offer them services:
-//             # Logout:
-//             - If the user chooses this option, they are logged out and offered the option, as at the beginning, to sign up, log in, or change the password.
-            
-//             # Withdraw Money:
-//             - If the user chooses this option, they can withdraw an amount from their bank (not exceeding the available amount).
-            
-//             # Deposit Money:
-//             - If the user chooses this option, they can deposit the desired amount (not exceeding 1000 dirhams).
-            
-//             # Take a Loan:
-//             - If the user chooses this option, they can take a loan up to 20% of what they already have.
-//             - They receive an additional 20%, but lose 10% with each login until reaching the amount of their loan.
-            
-//             # Invest:
-//             - If the user chooses this option, they can invest any amount in the bank.
-//             - Upon the next login, they will receive 20% of their investment each time until reaching 120% (earning 20% on each investment).
-            
-//             # History:
-//             - Ability to view the entire transaction history.
-// fjs.txt
 
