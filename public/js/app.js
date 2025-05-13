@@ -114,16 +114,30 @@ let askUsername = true
             for (let i = 0; i < dataBaseUser.length; i++) {
               if (dataBaseUser[i].Email === loginEmail && dataBaseUser[i].Password === loginPassword) {
             alert("Login successful! Welcome, " + dataBaseUser[i].Name)
-            
             let currentUser = dataBaseUser[i];
+            
 
             // hna l user ba9i ma3ndo 7at chi ruyal*************************************
-            
+
                 if (currentUser.Balance === undefined) {
                 currentUser.Balance = 0
                 currentUser.History = []
                 currentUser.Loan = 0
                 currentUser.Investment = 0
+                }
+                if (currentUser.Loan> 0) {
+                currentUser.Balance-= currentUser.Balance*0.1
+                currentUser.Loan -=currentUser.Balance*0.1
+                currentUser.History.push("credit liba9i"+ currentUser.Loan )
+            }
+            const maxProfit = currentUser.Investment *1.2
+            let gain = 0
+            if (currentUser.Investment>0 && maxProfit>gain) {
+                 
+                        currentUser.Balance+=currentUser.Investment*0.2
+                        gain *=0.2
+                        
+               currentUser.History.push("ch7al rba7ti"+ gain )
                 }
             
 
